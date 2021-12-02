@@ -58,31 +58,16 @@ def handlePlayerInput(player):
 
 
 def handlePlayer(player):
-    takenSymbol = None
-
     if player == "player1":
         player1piece = str(input(player + piecetype))
-        if player1piece == 'x' or player1piece == 'o':
-            takenSymbol = player1piece
-            row, col = handlePlayerInput(player)
-            board[row][col] = player1piece
-        else:
-            print("Symbol must be \'x\' or \'o\'")
-            handlePlayer("player1")
-
+        row, col = handlePlayerInput(player)
+        
+        board[row][col] = player1piece
     elif player == "player2":
         player2piece = str(input(player + piecetype))
-        if player2piece == 'x' or player2piece == 'o' and player2piece != takenSymbol:
-            row, col = handlePlayerInput(player)
-            board[row][col] = player2piece
-        elif player2piece == takenSymbol:
-            if takenSymbol == 'x':
-                print("Symbol taken. Must use \'o\'")
-            else:
-                print("Symbol taken. Must use \'x\'")
-        else:
-            print("Symbol must be \'x\' or \'o\'")
-            handlePlayer("player2")      
+        row, col = handlePlayerInput(player)
+        
+        board[row][col] = player2piece        
     else:
         print("Invalid player")
 
