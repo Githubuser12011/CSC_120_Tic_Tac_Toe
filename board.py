@@ -1,16 +1,12 @@
 board = [
-
     ['-', '-', '-'],
-
     ['-', '-', '-'],
-
     ['-', '-', '-'],
-
 ]
 
-piecetype = "Pick your piece:"
-rowmess = "select your row:"
-colmess = "select your column:"
+piecetype = "Pick your piece: "
+rowmess = "select your row: "
+colmess = "select your column: "
 
 player1piece = None
 player2piece = None
