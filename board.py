@@ -13,7 +13,9 @@ player2piece = None
 
 inputStack = []
 
-def checkDuplicates(row, col):
+isGameRunning = True
+
+def checkDuplicates(player, row, col):
     invalidInput = False
     inputStack.append([row, col])
     if len(inputStack) == 2:
@@ -25,7 +27,7 @@ def checkDuplicates(row, col):
 
     if invalidInput:
         print("Invalid input. Duplicate entry.")
-        handlePlayer("player2")
+        handlePlayer(player)
 
 def handlePlayerInput(player):
     invalidInput = False
@@ -52,7 +54,7 @@ def handlePlayerInput(player):
         if not col < 0 or not col > 2:
             invalidInput = False
 
-    checkDuplicates(row,col)
+    checkDuplicates(player, row,col)
     
     return row, col
 
@@ -74,4 +76,5 @@ def handlePlayer(player):
 handlePlayer("player1")
 handlePlayer("player2")
 print(board)
+ 
 
