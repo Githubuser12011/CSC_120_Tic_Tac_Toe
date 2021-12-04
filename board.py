@@ -73,8 +73,83 @@ def handlePlayer(player):
     else:
         print("Invalid player")
 
-handlePlayer("player1")
-handlePlayer("player2")
-print(board)
+def checkTheRows():
+    board = [
+    ['x', 'o', 'o'],
+    ['x', 'o', 'o'],
+    ['x', 'o', 'o'],
+]
+    column_check = {
+        "left": [
+            [0,0],
+            [1,0],
+            [2,0]
+        ],
+
+        "middle": [
+            [0, 1],
+            [1, 1],
+            [2, 1],
+        ],
+
+        "right": [
+            [0, 2],
+            [1, 2],
+            [2, 2],
+        ]
+    }
+
+    diagonal_check = {
+        "leftBottom": [ 
+            [2,0],
+            [1,1],
+            [0,2]
+        ],
+
+        "rightBottom": [ 
+            [0,0],
+            [1,1],
+            [2,2]
+        ]
+    },
+
+    row_check = {
+        "top": [
+            [0,0],
+            [0,1],
+            [0,2]
+        ],
+        "middle": [
+            [1,0],
+            [1,1],
+            [1,2]
+        ],
+        "bottom": [
+            [2,0],
+            [2,1],
+            [2,2]
+        ],
+    }
+
+    isWinner = False
+
+
+    answer = []
+    for index in range(len(board)):
+        for other_index in range(len(board)):
+            answer.append(board[other_index][index])
+            if answer == column_check["left"] or answer == column_check["middle"] or answer == column_check["right"]:
+                print(answer)
+
+    print(isWinner)
+
+checkTheRows()
+
+isGameRunning = False
+while isGameRunning:
+    handlePlayer("player1")
+    handlePlayer("player2")
+    print(board)
+
  
 
