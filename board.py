@@ -1,19 +1,27 @@
+# CSC 120 Tic Tac Toe Game
+# Created by Bryan Rojas (brojas1200) and Paul Ruiz Wilson (Githubuser12011)
+# Globals:
 board = [
     ['-', '-', '-'],
     ['-', '-', '-'],
     ['-', '-', '-'],
 ]
+isGameRunning = True
 
 piecetype = " Pick your piece: "
-rowmess = " select your row: "
-colmess = " select your column: "
+rowmess = " Select your row: "
+colmess = " Select your column: "
 
 player1piece = None
 player2piece = None
 
+# inputStack is a stack to make sure there are no duplicates.
 inputStack = []
 
-isGameRunning = True
+selectedPieces = {
+    "player1": None,
+    "player2": None
+}
 
 def checkDuplicates(player, row, col):
     invalidInput = False
@@ -32,124 +40,99 @@ def checkDuplicates(player, row, col):
 def handlePlayerInput(player):
     invalidInput = False
 
-    row = int(input(player + rowmess))
-
-    if row < 0 or row > 2:
+    try:
+        row = int(input(player + rowmess))
+        assert row >= 0
+        assert row < 3
+    except ValueError:
+        print("Row must be an integer.")
+        handlePlayerInput(player)
+    except AssertionError:
         invalidInput = True
-
+    
     while invalidInput:
         print("Invalid input.")
         row = int(input(player + rowmess))
-        if not row < 0 or not row > 2:
-            invalidInput = False 
+        if row >= 0 and row < 3:
+            invalidInput = False
     
-    col = int(input(player + colmess))
-
-    if col < 0 or col > 2:
+    try:
+        col = int(input(player + colmess))
+        assert col >= 0
+        assert col < 3
+    except ValueError:
+        print("Column must be an integer.")
+        handlePlayerInput(player)
+    except AssertionError:
         invalidInput = True
 
     while invalidInput:
         print("Invalid input.")
         col = int(input(player + colmess))
-        if not col < 0 or not col > 2:
+        if col >= 0 and col < 3:
             invalidInput = False
 
-    checkDuplicates(player, row,col)
+    checkDuplicates(player, row, col)
     
     return row, col
 
-
 def handlePlayer(player):
+    assert player == "player1" or player == "player2"
+    
     if player == "player1":
-        player1piece = str(input(player + piecetype))
-        row, col = handlePlayerInput(player)
-        
-        board[row][col] = player1piece
+        try:
+            if selectedPieces[player] == None:
+                player1piece = str(input(player + piecetype))
+                assert player1piece == 'x' or player1piece == 'o'
+                selectedPieces[player] = player1piece
+        except AssertionError:
+            print("Pieces must only be x or o.")
+            handlePlayer(player)
+
+        try: 
+            row, col = handlePlayerInput(player)
+            board[row][col] = player1piece
+        except:
+            pass
     elif player == "player2":
-        player2piece = str(input(player + piecetype))
-        row, col = handlePlayerInput(player)
-        
-        board[row][col] = player2piece        
-    else:
-        print("Invalid player")
+        try:
+            if selectedPieces[player] == None:
+                player2piece = str(input(player + piecetype))
+                assert player2piece == 'x' or player2piece == 'o'
+                assert selectedPieces["player1"] != player2piece
 
-def checkTheRows():
-    board = [
-    ['x', 'o', 'o'],
-    ['x', 'o', 'o'],
-    ['x', 'o', 'o'],
-]
-    column_check = {
-        "left": [
-            [0,0],
-            [1,0],
-            [2,0]
-        ],
+                selectedPieces[player] = player2piece
+        except AssertionError:
+            print("Pieces must only be x or o. Pieces also can not be the same as the previous player.")
+            handlePlayer(player)
 
-        "middle": [
-            [0, 1],
-            [1, 1],
-            [2, 1],
-        ],
+        try: 
+            row, col = handlePlayerInput(player)
+            board[row][col] = player2piece
+        except:
+            pass
 
-        "right": [
-            [0, 2],
-            [1, 2],
-            [2, 2],
-        ]
-    }
+def bindToBoard(functionToBind):
+    for row in range(len(board)):
+        for row_element in range(len(board)):
+            functionToBind(row, row_element)
+    
 
-    diagonal_check = {
-        "leftBottom": [ 
-            [2,0],
-            [1,1],
-            [0,2]
-        ],
+def resetBoard(row, row_element):
+    board[row][row_element] = '-'
 
-        "rightBottom": [ 
-            [0,0],
-            [1,1],
-            [2,2]
-        ]
-    },
-
-    row_check = {
-        "top": [
-            [0,0],
-            [0,1],
-            [0,2]
-        ],
-        "middle": [
-            [1,0],
-            [1,1],
-            [1,2]
-        ],
-        "bottom": [
-            [2,0],
-            [2,1],
-            [2,2]
-        ],
-    }
-
-    isWinner = False
+def validateWinner(row, row_element):
+    return "hi"
+    # print(row, row_element)
 
 
-    answer = []
-    for index in range(len(board)):
-        for other_index in range(len(board)):
-            answer.append(board[other_index][index])
-            if answer == column_check["left"] or answer == column_check["middle"] or answer == column_check["right"]:
-                print(answer)
+# isGameRunning = False
 
-    print(isWinner)
+bindToBoard(resetBoard)
 
-checkTheRows()
-
-isGameRunning = False
 while isGameRunning:
     handlePlayer("player1")
     handlePlayer("player2")
     print(board)
-
  
 
