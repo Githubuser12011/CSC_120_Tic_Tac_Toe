@@ -56,8 +56,10 @@ def checkFullBoard(row, row_element):
         return False
     return True
 
+
 # inputStack is a stack to make sure there are no duplicates.
 inputStack = []
+
 
 def checkDuplicates(player, row, col):
     invalidInput = False
@@ -73,10 +75,13 @@ def checkDuplicates(player, row, col):
         print("Invalid input. Duplicate entry.")
         handlePlayer(player)
 
+
 def handlePlayerInput(player):
     invalidInput = False
-    if bindToBoard(checkColumns, player) or bindToBoard(checkRows, player) or bindToBoard(checkDiagonal, player) or bindToBoard(checkInverseDiagonal, player) or bindToBoard(checkFullBoard, player):
-        print(player + " has won!")
+    if bindToBoard(checkColumns, player) or bindToBoard(checkRows, player) or bindToBoard(checkDiagonal,
+                                                                                          player) or bindToBoard(
+            checkInverseDiagonal, player) or bindToBoard(checkFullBoard, player):
+        print(player + " has won! Game Over.")
     else:
         try:
             row = int(input(player + rowmess))
@@ -112,6 +117,7 @@ def handlePlayerInput(player):
         checkDuplicates(player, row, col)
     return row, col
 
+
 def handlePlayer(player):
     assert player == "player1" or player == "player2"
 
@@ -125,9 +131,9 @@ def handlePlayer(player):
             print("Pieces must only be x or o.")
             handlePlayer(player)
 
-        try: 
+        try:
             row, col = handlePlayerInput(player)
-            try: 
+            try:
                 assert board[row][col] == '-'
                 board[row][col] = player1piece
             except AssertionError:
@@ -147,9 +153,9 @@ def handlePlayer(player):
             print("Pieces must only be x or o. Pieces also can not be the same as the previous player.")
             handlePlayer(player)
 
-        try: 
+        try:
             row, col = handlePlayerInput(player)
-            try: 
+            try:
                 assert board[row][col] == '-'
                 board[row][col] = player2piece
             except AssertionError:
@@ -158,9 +164,10 @@ def handlePlayer(player):
         except:
             pass
 
-# isGameRunning = False
+    # isGameRunning = False
 
-bindToBoard(resetBoard)
+    bindToBoard(resetBoard)
+
 
 while isGameRunning:
     if not selectedPieces["player1"] == None and not selectedPieces["player2"] == None:
@@ -171,5 +178,3 @@ while isGameRunning:
         handlePlayer("player2")
 
     bindToBoard(printBoard)
- 
-
